@@ -2,18 +2,21 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Mi primera página con Firebase</title>
+    <title>Guardar datos en Firestore</title>
   </head>
   <body>
-    <h1>Conexión con Firebase</h1>
+    <h1>Guardar datos en Firestore</h1>
+
+    <input id="nombre" placeholder="Tu nombre">
+    <input id="mensaje" placeholder="Escribe un mensaje">
+    <button id="enviar">Guardar en Firestore</button>
+
+    <p id="resultado"></p>
 
     <script type="module">
-      //  Importar Firebase desde CDN (una sola versión)
       import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
-      import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
-      import { getFirestore } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
-
-      //  Tu configuración de Firebase
+      import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+      
       const firebaseConfig = { 
         apiKey: "AIzaSyC1JqbUZ75hAFZg6ceCbiGR04yHVi8ILLQ",
         authDomain: "miapp-8a765.firebaseapp.com",
@@ -24,12 +27,34 @@
         measurementId: "G-6Z0GCN770G"
       };
 
-      //  Una sola inicialización
       const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
       const db = getFirestore(app);
 
-      console.log("Firebase conectado ");
+      const nombreInput = document.getElementById("nombre");
+      const mensajeInput = document.getElementById("mensaje");
+      const btn = document.getElementById("enviar");
+      const resultado = document.getElementById("resultado");
+
+      btn.addEventListener("click", async () => {
+        const nombre = nombreInput.value;
+        const mensaje = mensajeInput.value;
+
+        if (!nombre || !mensaje) {
+          resultado.textContent = "Falta escribir algo";
+          return;
+        }
+
+        await addDoc(collection(db, "mensajes"), {
+          nombre: nombre,
+          mensaje: mensaje,
+          fecha: new Date()
+        });
+
+        resultado.textContent = "✅ Guardado en Firestore";
+        nombreInput.value = "";
+        mensajeInput.value = "";
+      });
     </script>
   </body>
 </html>
+

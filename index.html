@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Mi primera página con Firebase</title>
+  </head>
+  <body>
+    <h1>Conexión con Firebase</h1>
+
+    <script type="module">
+      //  Importar Firebase desde CDN (una sola versión)
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
+      import { getFirestore } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+
+      //  Tu configuración de Firebase
+      const firebaseConfig = { 
+        apiKey: "AIzaSyC1JqbUZ75hAFZg6ceCbiGR04yHVi8ILLQ",
+        authDomain: "miapp-8a765.firebaseapp.com",
+        projectId: "miapp-8a765",
+        storageBucket: "miapp-8a765.firebasestorage.app",
+        messagingSenderId: "505577033701",
+        appId: "1:505577033701:web:29fc738c845e5fa185290c",
+        measurementId: "G-6Z0GCN770G"
+      };
+
+      //  Una sola inicialización
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const db = getFirestore(app);
+
+      console.log("Firebase conectado ");
+    </script>
+  </body>
+</html>
